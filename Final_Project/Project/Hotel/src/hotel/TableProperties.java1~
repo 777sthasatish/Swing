@@ -1,0 +1,76 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package hotel;
+
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+
+/**
+ *
+ * @author mike
+ */
+public class TableProperties {
+private DefaultTableModel model;
+	private JTable table;
+	
+	
+	public TableProperties(JTable table,DefaultTableModel model)
+	{
+		this.table = table;
+		this.model = model;
+                table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setRowHeight(25);
+		table.getTableHeader().setResizingAllowed(false);
+		table.getTableHeader().setForeground(Color.red);
+		table.getTableHeader().setFont(new Font("Arial", Font.BOLD, 15));
+		table.getTableHeader().setReorderingAllowed(false);
+		table.setFont(new Font("Arial", Font.BOLD, 15));
+                ((DefaultTableCellRenderer)table.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+	}
+	public void addColumns(String []column)
+	{
+		for (int i=0;i<column.length;i++)
+		{
+			model.addColumn(column[i]);
+		}
+	}
+	
+	public void changeColumnProperties(int[] size)
+	{
+		final CenterTableCellRenderer renderer = new CenterTableCellRenderer();
+		final int[] widths = size;
+		SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+            	for (int i=0;i<widths.length;i++)
+        		{
+                            System.out.println(i+"");
+        			TableColumn col = table.getColumnModel().getColumn(i);
+        			col.setPreferredWidth(widths[i]);
+        			col.setCellRenderer(renderer);
+        		}
+            }
+        });
+		
+		
+	}
+	
+	class CenterTableCellRenderer extends DefaultTableCellRenderer {
+		private static final long serialVersionUID = 1L;
+
+		protected CenterTableCellRenderer() {
+			setHorizontalAlignment(SwingConstants.CENTER);
+		}
+	}
+}
+

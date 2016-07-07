@@ -1,0 +1,27 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package hotel;
+
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
+
+/**
+ *
+ * @author mike
+ */
+public class Screen2Image
+{
+public Screen2Image() throws Exception
+{
+Robot robot = new Robot();
+
+BufferedImage screenShot = robot.createScreenCapture(new Rectangle(Toolkit.getDefaultToolkit().getScreenSize()));
+ImageIO.write(screenShot, "JPG", new File("screenShot.jpg"));
+}
+}

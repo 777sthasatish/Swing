@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="details" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="780a9f80-8e20-428c-b57c-39105579fdd7">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="res_id" class="java.lang.Integer"/>
+	<parameter name="num_days" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT
+     guest.`f_name` AS guest_f_name,
+     guest.`l_name` AS guest_l_name,
+     guest.`gender` AS guest_gender,
+     guest.`address` AS guest_address,
+     guest.`contact_num` AS guest_contact_num,
+     guest.`e_mail` AS guest_e_mail,
+     guest.`id` AS guest_id,
+     item.`name` AS item_name,
+     item_category.`category` AS item_category_category,
+     item.`price` AS item_price,
+     order_active.`item_code` AS order_active_item_code,
+     order_active.`quantity` AS order_active_quantity,
+     reservation_active.`reservation_id` AS reservation_active_reservation_id,
+     reservation_active.`num_of_rooms` AS reservation_active_num_of_rooms,
+     reservation_active.`num_of_guests` AS reservation_active_num_of_guests,
+     reservation_active.`check_in` AS reservation_active_check_in,
+     reservation_active.`advance_payment` AS reservation_active_advance_payment,
+     reservation_active.`total_room_cost` AS reservation_active_total_room_cost
+FROM
+     `item` item INNER JOIN `item_category` item_category ON item.`cat_id` = item_category.`cat_id`
+     INNER JOIN `order_active` order_active ON item.`item_code` = order_active.`item_code`
+     INNER JOIN `reservation_active` reservation_active ON order_active.`reservation_id` = reservation_active.`reservation_id`
+     INNER JOIN `guest` guest ON reservation_active.`guest_id` = guest.`id`
+WHERE
+     reservation_active.reservation_id = $P{res_id}
+ORDER BY
+     order_active.item_code ASC]]>
+	</queryString>
+	<field name="guest_f_name" class="java.lang.String"/>
+	<field name="guest_l_name" class="java.lang.String"/>
+	<field name="guest_gender" class="java.lang.String"/>
+	<field name="guest_address" class="java.lang.String"/>
+	<field name="guest_contact_num" class="java.lang.String"/>
+	<field name="guest_e_mail" class="java.lang.String"/>
+	<field name="guest_id" class="java.lang.Integer"/>
+	<field name="item_name" class="java.lang.String"/>
+	<field name="item_category_category" class="java.lang.String"/>
+	<field name="item_price" class="java.lang.Integer"/>
+	<field name="order_active_item_code" class="java.lang.Long"/>
+	<field name="order_active_quantity" class="java.lang.Integer"/>
+	<field name="reservation_active_reservation_id" class="java.lang.Integer"/>
+	<field name="reservation_active_num_of_rooms" class="java.lang.Integer"/>
+	<field name="reservation_active_num_of_guests" class="java.lang.Integer"/>
+	<field name="reservation_active_check_in" class="java.sql.Date"/>
+	<field name="reservation_active_advance_payment" class="java.lang.Integer"/>
+	<field name="reservation_active_total_room_cost" class="java.lang.Integer"/>
+	<variable name="totalfoodcost" class="java.lang.Double" resetType="Column" calculation="Sum">
+		<variableExpression><![CDATA[$F{order_active_quantity} * $F{item_price}]]></variableExpression>
+	</variable>
+	<group name="Group1">
+		<groupExpression><![CDATA[(int)($V{REPORT_COUNT}/15)]]></groupExpression>
+		<groupHeader>
+			<band height="37">
+				<frame>
+					<reportElement uuid="24f8f198-9ad5-4dc7-bb98-0366a492bd80" mode="Opaque" x="0" y="7" width="555" height="24" forecolor="#B89F7D" backcolor="#000000"/>
+					<staticText>
+						<reportElement uuid="34ea8f6b-e42d-46c0-995e-02d34da6225c" style="Detail" positionType="Float" mode="Transparent" x="7" y="3" width="108" height="18" forecolor="#FFFFFF" backcolor="#FFFFFF"/>
+						<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+							<font fontName="Times New Roman" size="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+							<paragraph lineSpacing="Single"/>
+						</textElement>
+						<text><![CDATA[Guest ID]]></text>
+					</staticText>
+					<textField>
+						<reportElement uuid="ec20fc15-6fc4-4c1f-a9e9-c4da9af128c9" style="Detail" positionType="Float" mode="Transparent" x="134" y="3" width="108" height="18" forecolor="#FFFFFF" backcolor="#FFFFFF"/>
+						<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+							<font fontName="Times New Roman" size="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+							<paragraph lineSpacing="Single"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{guest_id}]]></textFieldExpression>
+					</textField>
+				</frame>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="144">
+				<elementGroup>
+					<staticText>
+						<reportElement uuid="34ea8f6b-e42d-46c0-995e-02d34da6225c" style="Detail" positionType="Float" mode="Transparent" x="307" y="24" width="108" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+						<textElement verticalAlignment="Top" rotation="None" markup="none">
+							<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+							<paragraph lineSpacing="Single"/>
+						</textElement>
+						<text><![CDATA[Total Food Cost]]></text>
+					</staticText>
+					<textField isStretchWithOverflow="true" pattern="Rs #,##0.00">
+						<reportElement uuid="ebd5a6f7-aacc-4c03-b86e-e634d3e657a2" style="Detail" positionType="Float" x="428" y="123" width="108" height="18"/>
+						<textElement>
+							<font size="14"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$V{totalfoodcost} + ( $F{reservation_active_total_room_cost} * $P{num_days})-$F{reservation_active_advance_payment}]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement uuid="34ea8f6b-e42d-46c0-995e-02d34da6225c" style="Detail" positionType="Float" mode="Transparent" x="307" y="99" width="108" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+						<textElement verticalAlignment="Top" rotation="None" markup="none">
+							<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+							<paragraph lineSpacing="Single"/>
+						</textElement>
+						<text><![CDATA[Discount]]></text>
+					</staticText>
+					<staticText>
+						<reportElement uuid="34ea8f6b-e42d-46c0-995e-02d34da6225c" style="Detail" positionType="Float" mode="Transparent" x="307" y="74" width="108" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+						<textElement verticalAlignment="Top" rotation="None" markup="none">
+							<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+							<paragraph lineSpacing="Single"/>
+						</textElement>
+						<text><![CDATA[Advance Payment]]></text>
+					</staticText>
+					<textField isStretchWithOverflow="true" pattern="Rs #,##0.00">
+						<reportElement uuid="ebd5a6f7-aacc-4c03-b86e-e634d3e657a2" style="Detail" positionType="Float" x="428" y="74" width="108" height="18"/>
+						<textElement>
+							<font size="14"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{reservation_active_advance_payment}]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement uuid="34ea8f6b-e42d-46c0-995e-02d34da6225c" style="Detail" positionType="Float" mode="Transparent" x="307" y="49" width="108" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+						<textElement verticalAlignment="Top" rotation="None" markup="none">
+							<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+							<paragraph lineSpacing="Single"/>
+						</textElement>
+						<text><![CDATA[Total Cost]]></text>
+					</staticText>
+					<staticText>
+						<reportElement uuid="34ea8f6b-e42d-46c0-995e-02d34da6225c" style="Detail" positionType="Float" mode="Transparent" x="307" y="123" width="108" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+						<textElement verticalAlignment="Top" rotation="None" markup="none">
+							<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+							<paragraph lineSpacing="Single"/>
+						</textElement>
+						<text><![CDATA[To Pay]]></text>
+					</staticText>
+					<textField isStretchWithOverflow="true" pattern="Rs #,##0.00">
+						<reportElement uuid="ebd5a6f7-aacc-4c03-b86e-e634d3e657a2" style="Detail" positionType="Float" x="428" y="24" width="108" height="18"/>
+						<textElement>
+							<font size="14"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$V{totalfoodcost}]]></textFieldExpression>
+					</textField>
+					<textField isStretchWithOverflow="true" pattern="Rs #,##0.00">
+						<reportElement uuid="ebd5a6f7-aacc-4c03-b86e-e634d3e657a2" style="Detail" positionType="Float" x="428" y="49" width="108" height="18"/>
+						<textElement>
+							<font size="14"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$V{totalfoodcost} + ( $F{reservation_active_total_room_cost} * $P{num_days})]]></textFieldExpression>
+					</textField>
+					<textField isStretchWithOverflow="true" pattern="Rs #,##0.00">
+						<reportElement uuid="ebd5a6f7-aacc-4c03-b86e-e634d3e657a2" style="Detail" positionType="Float" x="428" y="99" width="108" height="18"/>
+						<textElement>
+							<font size="14"/>
+						</textElement>
+						<textFieldExpression><![CDATA["N/A"]]></textFieldExpression>
+					</textField>
+				</elementGroup>
+				<staticText>
+					<reportElement uuid="34ea8f6b-e42d-46c0-995e-02d34da6225c" style="Detail" positionType="Float" mode="Transparent" x="2" y="0" width="551" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[---------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="Group2">
+		<groupExpression><![CDATA[(int)($V{REPORT_COUNT}/5)]]></groupExpression>
+		<groupHeader>
+			<band height="260">
+				<staticText>
+					<reportElement uuid="34ea8f6b-e42d-46c0-995e-02d34da6225c" style="Detail" positionType="Float" mode="Transparent" x="17" y="238" width="116" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Lucida Bright" size="13" isBold="false" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Item Name]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="34ea8f6b-e42d-46c0-995e-02d34da6225c" style="Detail" positionType="Float" mode="Transparent" x="151" y="238" width="116" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Lucida Bright" size="13" isBold="false" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Category]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="34ea8f6b-e42d-46c0-995e-02d34da6225c" style="Detail" positionType="Float" mode="Transparent" x="285" y="238" width="116" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Lucida Bright" size="13" isBold="false" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Quantity]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="34ea8f6b-e42d-46c0-995e-02d34da6225c" style="Detail" positionType="Float" mode="Transparent" x="421" y="238" width="116" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Lucida Bright" size="13" isBold="false" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Cost]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="ebd5a6f7-aacc-4c03-b86e-e634d3e657a2" style="Detail" positionType="Float" x="131" y="10" width="108" height="18"/>
+					<textElement textAlignment="Center">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{guest_f_name}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="34ea8f6b-e42d-46c0-995e-02d34da6225c" style="Detail" positionType="Float" mode="Transparent" x="10" y="10" width="108" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[First Name]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="34ea8f6b-e42d-46c0-995e-02d34da6225c" style="Detail" positionType="Float" mode="Transparent" x="284" y="10" width="108" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Last Name]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="ebd5a6f7-aacc-4c03-b86e-e634d3e657a2" style="Detail" positionType="Float" x="405" y="10" width="108" height="18"/>
+					<textElement textAlignment="Center">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{guest_l_name}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="34ea8f6b-e42d-46c0-995e-02d34da6225c" style="Detail" positionType="Float" mode="Transparent" x="284" y="41" width="108" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Address]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="34ea8f6b-e42d-46c0-995e-02d34da6225c" style="Detail" positionType="Float" mode="Transparent" x="10" y="41" width="108" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Gender]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="ebd5a6f7-aacc-4c03-b86e-e634d3e657a2" style="Detail" positionType="Float" x="131" y="41" width="108" height="18"/>
+					<textElement textAlignment="Center">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{guest_gender}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="ebd5a6f7-aacc-4c03-b86e-e634d3e657a2" style="Detail" positionType="Float" x="405" y="41" width="108" height="18"/>
+					<textElement textAlignment="Center">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{guest_address}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="34ea8f6b-e42d-46c0-995e-02d34da6225c" style="Detail" positionType="Float" mode="Transparent" x="284" y="73" width="108" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[E-mail]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="34ea8f6b-e42d-46c0-995e-02d34da6225c" style="Detail" positionType="Float" mode="Transparent" x="10" y="73" width="108" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Contact Number]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="ebd5a6f7-aacc-4c03-b86e-e634d3e657a2" style="Detail" positionType="Float" x="131" y="73" width="108" height="18"/>
+					<textElement textAlignment="Center">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{guest_contact_num}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="ebd5a6f7-aacc-4c03-b86e-e634d3e657a2" style="Detail" positionType="Float" x="405" y="73" width="108" height="18"/>
+					<textElement textAlignment="Center">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{guest_e_mail}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="dd-MMM-yyyy">
+					<reportElement uuid="ebd5a6f7-aacc-4c03-b86e-e634d3e657a2" style="Detail" positionType="Float" x="142" y="142" width="108" height="18"/>
+					<textElement textAlignment="Center">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{reservation_active_check_in}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="34ea8f6b-e42d-46c0-995e-02d34da6225c" style="Detail" positionType="Float" mode="Transparent" x="21" y="142" width="108" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Check In Date]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="34ea8f6b-e42d-46c0-995e-02d34da6225c" style="Detail" positionType="Float" mode="Transparent" x="295" y="142" width="108" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Check Out Date]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="dd-MMM-yyyy">
+					<reportElement uuid="ebd5a6f7-aacc-4c03-b86e-e634d3e657a2" style="Detail" positionType="Float" x="416" y="142" width="108" height="18"/>
+					<textElement textAlignment="Center">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA["N/A"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="ebd5a6f7-aacc-4c03-b86e-e634d3e657a2" style="Detail" positionType="Float" x="142" y="173" width="108" height="18"/>
+					<textElement textAlignment="Center">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{reservation_active_num_of_rooms}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="34ea8f6b-e42d-46c0-995e-02d34da6225c" style="Detail" positionType="Float" mode="Transparent" x="21" y="173" width="108" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Number of Rooms]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="34ea8f6b-e42d-46c0-995e-02d34da6225c" style="Detail" positionType="Float" mode="Transparent" x="295" y="173" width="108" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Total Room Cost]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="Rs #,##0">
+					<reportElement uuid="ebd5a6f7-aacc-4c03-b86e-e634d3e657a2" style="Detail" positionType="Float" x="416" y="173" width="108" height="18"/>
+					<textElement textAlignment="Center">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{reservation_active_total_room_cost} * $P{num_days}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="34ea8f6b-e42d-46c0-995e-02d34da6225c" style="Detail" positionType="Float" mode="Transparent" x="21" y="206" width="108" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Number of Guests]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="ebd5a6f7-aacc-4c03-b86e-e634d3e657a2" style="Detail" positionType="Float" x="142" y="206" width="108" height="18"/>
+					<textElement textAlignment="Center">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{reservation_active_num_of_guests}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="34ea8f6b-e42d-46c0-995e-02d34da6225c" style="Detail" positionType="Float" mode="Transparent" x="2" y="115" width="551" height="18" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="MS Gothic" size="18" isBold="false" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Reservation Details]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="132" splitType="Stretch">
+			<image>
+				<reportElement uuid="d5fbd356-5a31-410c-8eba-78682ba8bb6e" x="456" y="0" width="99" height="132"/>
+				<imageExpression><![CDATA["cherry.jpg"]]></imageExpression>
+			</image>
+			<frame>
+				<reportElement uuid="24e26c40-10c7-4c39-9f36-1997cce4515b" mode="Opaque" x="0" y="0" width="451" height="95" backcolor="#000000"/>
+				<staticText>
+					<reportElement uuid="1619170e-fb22-48ae-a73e-6b437b3fd769" style="Title" x="0" y="0" width="451" height="95"/>
+					<textElement textAlignment="Center">
+						<font fontName="Lucida Sans" size="36" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Heaven Hill Hotel
+and Restaurant]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement uuid="daf8729b-2503-4e6e-93f1-9be4e584bb1c" mode="Opaque" x="0" y="100" width="451" height="32" forecolor="#000000" backcolor="#CC0000"/>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement uuid="c96c134b-3235-4700-b486-aec46310fe59" x="307" y="12" width="144" height="20" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="6" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="26" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="ebd5a6f7-aacc-4c03-b86e-e634d3e657a2" style="Detail" positionType="Float" x="18" y="6" width="116" height="18"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{item_name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="ebd5a6f7-aacc-4c03-b86e-e634d3e657a2" style="Detail" positionType="Float" x="152" y="6" width="116" height="18"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{item_category_category}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="ebd5a6f7-aacc-4c03-b86e-e634d3e657a2" style="Detail" positionType="Float" x="286" y="6" width="116" height="18"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{order_active_quantity}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement uuid="ebd5a6f7-aacc-4c03-b86e-e634d3e657a2" style="Detail" positionType="Float" x="422" y="6" width="116" height="18"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{item_price} * $F{order_active_quantity}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="13" splitType="Stretch">
+			<line>
+				<reportElement uuid="75b611a8-f8a4-4dd2-ab43-937d0679bd63" positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="27" splitType="Stretch">
+			<frame>
+				<reportElement uuid="3a0f78df-5ef5-4217-b800-d7f4a42e9d33" mode="Opaque" x="0" y="1" width="555" height="24" forecolor="#D0B48E" backcolor="#000000"/>
+				<textField evaluationTime="Report">
+					<reportElement uuid="62b08d44-d3d0-4470-ab75-778c66686cb8" style="Column header" x="513" y="0" width="40" height="20" forecolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="942994eb-5328-4e96-ab82-a4c86beaa64d" style="Column header" x="433" y="0" width="80" height="20" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement uuid="2e8748a0-6972-4ac2-a0eb-2fddb9f4c355" style="Column header" x="2" y="1" width="197" height="20" forecolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

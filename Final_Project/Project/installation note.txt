@@ -1,0 +1,6 @@
+Before installing this application
+1. Install MySQL
+2. Execute the query dbheavenhill.sql
+3. Execute the sql insert.txt file 
+4. Check if the Java Platform is installed, if not , then install it
+Install the application

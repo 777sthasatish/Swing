@@ -1,0 +1,31 @@
+
+insert into room_category (category,price,num_of_beds) values ('Standard',1000,1);
+insert into room_category (category,price,num_of_beds) values ('Deluxe',1200,1);
+insert into room_category (category,price,num_of_beds) values ('Normal Room',600,1);
+insert into room_category (category,price,num_of_beds) values ('Cottage Non Att.',400,1);
+insert into room_category (category,price,num_of_beds) values ('Cottage Att.',700,1);
+insert into room_category (category,price,num_of_beds) values ('Family Cottage',2000,2);
+ 
+insert into room (id,floor,cat_id,status) values ('S201-1',1,1,1);
+ insert into room (id,floor,cat_id,status) values ('S202-1',1,1,1);
+ insert into room (id,floor,cat_id,status) values ('S203-1',1,1,1);
+ insert into room (id,floor,cat_id,status) values ('S301-2',2,1,1);
+ insert into room (id,floor,cat_id,status) values ('S302-2',2,1,1);
+ insert into room (id,floor,cat_id,status) values ('S303-2',2,1,1);
+ insert into room (id,floor,cat_id,status) values ('D401-3',3,2,1);
+insert into room (id,floor,cat_id,status) values ('D402-3',3,2,1);
+ insert into room (id,floor,cat_id,status) values ('D403-3',3,2,1);
+ insert into room (id,floor,cat_id,status) values ('D404-3',3,3,1);
+ insert into room (id,floor,cat_id,status) values ('NA-C1',0,4,1);
+ insert into room (id,floor,cat_id,status) values ('NA-C2',0,4,1);
+ insert into room (id,floor,cat_id,status) values ('NA-C3',0,4,1);
+insert into room (id,floor,cat_id,status) values ('A-C4',0,5,1);
+ insert into room (id,floor,cat_id,status) values ('A-C5',0,5,1);
+ insert into room (id,floor,cat_id,status) values ('A-C6',0,5,1);
+ insert into room (id,floor,cat_id,status) values ('F-C7',0,6,1);
+
+insert into guest values (null,'mike','sth','Male','pepsicola','987456123','backb0n@gmail.com');
+insert into guest values (null,'john','nepali','Male','cocacola','98226123','john@gmail.com');
+insert into guest values (null,'beauty','sth','Female','beauty bazar','333456123','beauty@urs.com');
+
+select * from guest;

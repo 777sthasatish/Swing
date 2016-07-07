@@ -1,0 +1,5 @@
+Before installing this application
+1. Install MySQL
+2. Execute the query blood_bank_mgmt_sys.spl
+3. Check if the Java Platform is installed, if not , then install it
+Install the application

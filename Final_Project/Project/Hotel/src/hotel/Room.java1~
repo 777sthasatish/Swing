@@ -1,0 +1,66 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package hotel;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author mike
+ */
+public class Room {
+    Connection conn;
+    public Room()
+    {
+        conn = DbConnection.getConnection();
+    }
+    public int getCategoryID(String cat)
+    {
+        try {
+            PreparedStatement stat = conn.prepareStatement("select cat_id from room_category where category = ?");
+            stat.setString(1, cat);
+            ResultSet rs = stat.executeQuery();
+            rs.next();
+            int id = rs.getInt("cat_id");
+            return id;
+        } catch (SQLException ex) {
+            Logger.getLogger(Room.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+    public int getPrice(String cat)
+    {
+        try {
+            PreparedStatement stat = conn.prepareStatement("select price from room_category where category = ?");
+            stat.setString(1, cat);
+            ResultSet rs = stat.executeQuery();
+            rs.next();
+            int price = rs.getInt("price");
+            return price;
+        } catch (SQLException ex) {
+            Logger.getLogger(Room.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+    public String getCategory(String roomid)
+    {
+         try {
+            PreparedStatement stat = conn.prepareStatement("select category from room_category,room where room.id = ? and room.cat_id=room_category.cat_id");
+            stat.setString(1, roomid);
+            ResultSet rs = stat.executeQuery();
+            rs.next();
+            String cat = rs.getString("category");
+            return cat;
+        } catch (SQLException ex) {
+            Logger.getLogger(Room.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+}

@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report4" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="31a2af3d-3f28-46f0-88f3-9896270aadbe">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<queryString>
+		<![CDATA[SELECT
+     guest.`f_name` AS guest_f_name,
+     guest.`l_name` AS guest_l_name,
+     guest.`gender` AS guest_gender,
+     guest.`address` AS guest_address,
+     guest.`contact_num` AS guest_contact_num,
+     guest.`e_mail` AS guest_e_mail,
+     reservation_history.`reservation_id` AS reservation_history_reservation_id,
+     reservation_history.`num_of_rooms` AS reservation_history_num_of_rooms,
+     reservation_history.`num_of_guests` AS reservation_history_num_of_guests,
+     reservation_history.`check_in` AS reservation_history_check_in,
+     reservation_history.`check_out` AS reservation_history_check_out,
+     reservation_history.`discount` AS reservation_history_discount,
+     reservation_history.`total_paid` AS reservation_history_total_paid,
+     guest.`id` AS guest_id
+FROM
+     `guest` guest INNER JOIN `reservation_history` reservation_history ON guest.`id` = reservation_history.`guest_id`]]>
+	</queryString>
+	<field name="guest_f_name" class="java.lang.String"/>
+	<field name="guest_l_name" class="java.lang.String"/>
+	<field name="guest_gender" class="java.lang.String"/>
+	<field name="guest_address" class="java.lang.String"/>
+	<field name="guest_contact_num" class="java.lang.String"/>
+	<field name="guest_e_mail" class="java.lang.String"/>
+	<field name="reservation_history_reservation_id" class="java.lang.Integer"/>
+	<field name="reservation_history_num_of_rooms" class="java.lang.Integer"/>
+	<field name="reservation_history_num_of_guests" class="java.lang.Integer"/>
+	<field name="reservation_history_check_in" class="java.sql.Date"/>
+	<field name="reservation_history_check_out" class="java.sql.Date"/>
+	<field name="reservation_history_discount" class="java.lang.Integer"/>
+	<field name="reservation_history_total_paid" class="java.lang.Integer"/>
+	<field name="guest_id" class="java.lang.Integer"/>
+	<group name="guest_f_name">
+		<groupExpression><![CDATA[$F{guest_f_name}]]></groupExpression>
+		<groupHeader>
+			<band height="82">
+				<frame>
+					<reportElement uuid="e4fb79bc-2b70-455b-a010-f5c8b05d2707" mode="Opaque" x="0" y="3" width="721" height="24" forecolor="#B89F7D" backcolor="#000000"/>
+					<textField isStretchWithOverflow="true">
+						<reportElement uuid="ede39b33-17c5-454f-80c4-25eca8fbbc4b" style="SubTitle" x="127" y="0" width="570" height="24" forecolor="#FFFFFF"/>
+						<textElement>
+							<font isBold="false"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{guest_id}]]></textFieldExpression>
+					</textField>
+					<staticText>
+						<reportElement uuid="20870c4e-bfe6-4a8d-bb8c-45e72180b9f7" style="Column header" x="14" y="3" width="102" height="18" forecolor="#FFFFFF"/>
+						<textElement textAlignment="Center">
+							<font isBold="true"/>
+						</textElement>
+						<text><![CDATA[Guest ID]]></text>
+					</staticText>
+				</frame>
+				<rectangle>
+					<reportElement uuid="1c8d2a78-0494-4b19-8f89-453c890ba05b" x="725" y="3" width="77" height="24" backcolor="#666666"/>
+					<graphicElement>
+						<pen lineWidth="0.0"/>
+					</graphicElement>
+				</rectangle>
+				<textField>
+					<reportElement uuid="10afa2e8-db5f-421f-ad0d-4b33907fae2f" mode="Transparent" x="129" y="53" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{guest_l_name}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="fa794fa9-6dcc-4067-825d-ac812f27bdab" mode="Transparent" x="243" y="53" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{guest_gender}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="61c72d03-895a-4b81-b01b-652603ffe7d1" mode="Transparent" x="357" y="53" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{guest_address}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="ce9bbe0d-31ac-4f59-a3f4-ef16b618b47b" mode="Transparent" x="469" y="53" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{guest_contact_num}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="74b7485e-f1d7-4c29-aab9-f1e7af635a81" mode="Transparent" x="582" y="53" width="115" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{guest_e_mail}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="91af8654-91f0-418e-a7d2-0973b2e276f4" mode="Transparent" x="129" y="27" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Last Name]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="91af8654-91f0-418e-a7d2-0973b2e276f4" mode="Transparent" x="243" y="27" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Gender]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="91af8654-91f0-418e-a7d2-0973b2e276f4" mode="Transparent" x="356" y="27" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Address]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="91af8654-91f0-418e-a7d2-0973b2e276f4" mode="Transparent" x="469" y="27" width="100" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Contact Num]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="91af8654-91f0-418e-a7d2-0973b2e276f4" mode="Transparent" x="582" y="27" width="115" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[E-mail]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="91af8654-91f0-418e-a7d2-0973b2e276f4" mode="Transparent" x="19" y="27" width="97" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[First Name]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="8ff5fa9e-9bd7-4f9d-a109-c2654cedc33f" mode="Transparent" x="17" y="53" width="99" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{guest_f_name}]]></textFieldExpression>
+				</textField>
+			</band>
+			<band height="37">
+				<staticText>
+					<reportElement uuid="20870c4e-bfe6-4a8d-bb8c-45e72180b9f7" style="Column header" x="2" y="16" width="102" height="18" forecolor="#000000"/>
+					<textElement textAlignment="Center">
+						<font isBold="false" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Num of Rooms]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="ed87d66c-ab86-410d-aefc-540dfe4561c0" style="Column header" x="115" y="16" width="109" height="18" forecolor="#000000"/>
+					<textElement textAlignment="Center">
+						<font isBold="false" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Num of Guests]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="7ca3a7d5-dbc3-46b3-ab5b-f7eff540c6d6" style="Column header" x="240" y="16" width="133" height="18" forecolor="#000000"/>
+					<textElement textAlignment="Center">
+						<font isBold="false" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Check In Date]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="0f85a67c-a0c3-4bba-830a-a1e578d19f67" style="Column header" x="383" y="16" width="142" height="18" forecolor="#000000"/>
+					<textElement textAlignment="Center">
+						<font isBold="false" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Check Out Date]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="6eaaaed7-b271-4164-b0fb-51ff7dadd73a" style="Column header" x="536" y="16" width="72" height="18" forecolor="#000000"/>
+					<textElement textAlignment="Center">
+						<font isBold="false" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Discount]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="0efb68d4-703c-4381-89f9-21e234845079" style="Column header" x="634" y="16" width="72" height="18" forecolor="#000000"/>
+					<textElement textAlignment="Center">
+						<font isBold="false" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[Total Paid]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="25">
+				<staticText>
+					<reportElement uuid="91af8654-91f0-418e-a7d2-0973b2e276f4" mode="Transparent" x="537" y="5" width="112" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="Times New Roman" size="14" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<text><![CDATA[Number of Visits]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="1ae74779-d178-467b-8f95-c2edfe266dd1" style="Detail" positionType="Float" x="654" y="5" width="67" height="18"/>
+					<textElement textAlignment="Center">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{guest_f_name_COUNT}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="reservation_history_reservation_id">
+		<groupExpression><![CDATA[$F{reservation_history_reservation_id}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="102" splitType="Stretch">
+			<image>
+				<reportElement uuid="0944416d-23f8-486f-8cdc-2f7ffbdbb7f5" x="725" y="0" width="77" height="102"/>
+				<imageExpression><![CDATA["cherry.jpg"]]></imageExpression>
+			</image>
+			<frame>
+				<reportElement uuid="25dfbb7e-fd4d-48a5-b06b-f6cd1da87272" mode="Opaque" x="0" y="0" width="721" height="66" backcolor="#000000"/>
+				<staticText>
+					<reportElement uuid="bbd1593a-5122-4780-99db-e2f41e857484" style="Title" x="0" y="0" width="387" height="66"/>
+					<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+					<textElement verticalAlignment="Bottom">
+						<font size="48" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Reservation Report]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="6978c273-c64c-4318-9bff-08a14d7877db" style="SubTitle" x="387" y="37" width="316" height="29"/>
+					<textElement textAlignment="Right">
+						<font size="22" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Dang Valley Hotel and Restaurant]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement uuid="7b6713af-4131-47c9-8535-6c155694aabc" mode="Opaque" x="0" y="70" width="721" height="32" forecolor="#000000" backcolor="#CC0000"/>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement uuid="98073701-b825-407e-ad52-d55b0876c8d3" x="553" y="12" width="144" height="20" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="18" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="18" splitType="Stretch">
+			<frame>
+				<reportElement uuid="28a84636-c884-4174-8ae6-eb19738e3a6c" style="Row" mode="Opaque" x="0" y="0" width="797" height="18"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="ebd5a6f7-aacc-4c03-b86e-e634d3e657a2" style="Detail" positionType="Float" x="14" y="0" width="102" height="18"/>
+					<textElement textAlignment="Center">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{reservation_history_num_of_rooms}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="2f412da7-ad47-480f-af62-6cbd835b9275" style="Detail" positionType="Float" x="116" y="0" width="120" height="18"/>
+					<textElement textAlignment="Center">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{reservation_history_num_of_guests}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="MMMMM dd, yyyy">
+					<reportElement uuid="ace8c6d6-19c5-4df0-818b-9e1ca9587e38" style="Detail" positionType="Float" x="252" y="0" width="118" height="18"/>
+					<textElement textAlignment="Center">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{reservation_history_check_in}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="MMMMM dd, yyyy">
+					<reportElement uuid="8c465374-064b-40e6-85a4-e3cc42c188fe" style="Detail" positionType="Float" x="395" y="0" width="142" height="18"/>
+					<textElement textAlignment="Center">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{reservation_history_check_out}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="1ae74779-d178-467b-8f95-c2edfe266dd1" style="Detail" positionType="Float" x="553" y="0" width="67" height="18"/>
+					<textElement textAlignment="Center">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{reservation_history_discount}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement uuid="35985440-9edc-401b-915c-9784f78928cd" style="Detail" positionType="Float" x="649" y="0" width="72" height="18"/>
+					<textElement textAlignment="Center">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{reservation_history_total_paid}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="6" splitType="Stretch">
+			<line>
+				<reportElement uuid="3326b3a2-5c73-48f4-ad9e-70855590fa90" positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="26" splitType="Stretch">
+			<frame>
+				<reportElement uuid="63b9e64c-25f7-4882-938b-aae8f9e015c6" mode="Opaque" x="0" y="0" width="802" height="25" forecolor="#D0B48E" backcolor="#000000"/>
+				<textField evaluationTime="Report">
+					<reportElement uuid="0ee24c77-ea4b-469b-8661-6c8ba4f071a5" style="Column header" x="757" y="3" width="40" height="20" forecolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="998b251c-b475-4faf-abe8-b765a4235bf9" style="Column header" x="677" y="3" width="80" height="20" forecolor="#FFFFFF"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement uuid="13657beb-dfee-49fb-9b00-3f670e78fdfc" style="Column header" x="2" y="3" width="197" height="20" forecolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
